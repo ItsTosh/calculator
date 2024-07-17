@@ -34,14 +34,15 @@ function divide(num1, num2) {
 }
 
 function operate(num1, num2, operation) {
-  if (operation === "+") {
-    return add(num1, num2);
-  } else if (operation === "-") {
-    return subtract(num1, num2);
-  } else if (operation === "x") {
-    return multiply(num1, num2);
-  } else if (operation === "÷") {
-    return divide(num1, num2);
+  switch (operation) {
+    case "+":
+      return add(num1, num2);
+    case "-":
+      return subtract(num1, num2);
+    case "x": 
+      return multiply(num1, num2);
+    case "÷":
+      return divide(num1, num2);
   }
 }
 
@@ -50,11 +51,29 @@ numbers.forEach(number => {
     const eventTarget = e.target.innerHTML;
 
     if (operation === "" && num2 === "") {
-      num1 += eventTarget;
-      displayScreen.textContent = `${num1}`;
+      
+      if (eventTarget === "." && num1 === "") {
+        num1 = 0;
+        num1 += eventTarget;
+        displayScreen.textContent = `${num1}`;
+        console.log("hey I am playing")
+      } else {
+        num1 += eventTarget;
+        displayScreen.textContent = `${num1}`;
+      }
+
     } else {
-      num2 += eventTarget;
-      displayScreen.textContent = `${num1} ${operation} ${num2} =`;
+
+      if (eventTarget === "." && num2 === "") {
+        num2 = 0;
+        num2 += eventTarget;
+        displayScreen.textContent = `${num1} ${operation} ${num2}`;
+
+      } else {
+        num2 += eventTarget;
+        displayScreen.textContent = `${num1} ${operation} ${num2}`;
+      }
+
     }
 
     // If we click the dot, hasDotAlready = true; For num1
@@ -70,7 +89,7 @@ numbers.forEach(number => {
     } 
 
     // If I click a new number after having an equation already, num2 === new number
-    if (answer !== null) {
+    if (answer !== null && operation !== "") {
       num2 = "";
       num2 += eventTarget;
       answer = null;
@@ -91,9 +110,24 @@ operators.forEach(operator => {
       hasDotAlready = false;
       dot.removeAttribute("disabled", "")
       displayScreen.textContent = `${num1} ${operation}`;
+
     } else {
       answer = operate(num1, num2, operation);
-      answerScreen.textContent = answer; 
+
+      if (eventTarget === "=" && String(answer).includes(".")) {
+        let countDecimals = String(answer).split(".");
+  
+        if (countDecimals[1].length >= 3) {
+          countDecimals[1] = countDecimals[1].slice(0, 3);
+          countDecimals = countDecimals.join(".");
+          answer = countDecimals;
+          answerScreen.textContent = answer; 
+  
+        }
+      } else {
+        answerScreen.textContent = answer; 
+      }
+
     }
 
     // Feature: if they click "=" again after an equation, use the previous answer
@@ -108,7 +142,22 @@ operators.forEach(operator => {
     if (eventTarget !== "=" && num2 !== "") {
       num2 = "";
       displayScreen.textContent = `${num1} ${operation}`;
-      console.log('23')
+    }
+
+    if (operation !== "" && num1 === "") {
+      num1 = 0;
+      displayScreen.textContent = `${num1} ${operation}`;
+    }
+
+    if (operation !== "" && num1 !== "" && num2 === "" && eventTarget === "=") {
+      num2 = num1;
+      displayScreen.textContent = `${num1} ${operation} ${num2} =`;
+      answerScreen.textContent = `${num1}`;
+    }
+
+    if (eventTarget === "=" && operation === "" && num2 === "") {
+      displayScreen.textContent = `${num1} =`;
+      answerScreen.textContent = `${num1}`;
     }
 
   })
@@ -138,6 +187,7 @@ special.forEach(spec => {
       displayScreen.textContent = `${num1} ${operation} ${num2}`;
     } else if (eventTarget === "Delete" && num2 === "" && operation !== "") {
       operation = "";
+      num2 = "";
       displayScreen.textContent = `${num1} ${operation} ${num2}`;
     }
 
@@ -161,6 +211,8 @@ special.forEach(spec => {
     } else {
       dot.removeAttribute("disabled");
     }
+
+    displayScreen.textContent = `${num1} ${operation} ${num2}`;
   })
 })
 
