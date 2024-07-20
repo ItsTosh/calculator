@@ -89,7 +89,7 @@ numbers.forEach(number => {
     } 
 
     // If I click a new number after having an equation already, num2 === new number
-    if (answer !== null && operation !== "") {
+    if (answer !== null && operation !== "" && eventTarget !== ".") {
       num2 = "";
       num2 += eventTarget;
       answer = null;
@@ -114,16 +114,21 @@ operators.forEach(operator => {
     } else {
       answer = operate(num1, num2, operation);
 
-      if (eventTarget === "=" && String(answer).includes(".")) {
+      // if more than 21 digits, display in scientific notation
+      if (eventTarget === "=" && String(answer).includes("e")) {
+        answerScreen.textContent = answer; 
+      }
+
+      if (eventTarget === "=" && String(answer).includes(".") && !String(answer).includes("e")) {
         let countDecimals = String(answer).split(".");
   
-        if (countDecimals[1].length >= 3) {
-          countDecimals[1] = countDecimals[1].slice(0, 3);
+        if (countDecimals[1].length >= 8) {
+          countDecimals[1] = countDecimals[1].slice(0, 8);
           countDecimals = countDecimals.join(".");
-          answer = countDecimals;
+          answer = countDecimals + "...";
           answerScreen.textContent = answer; 
-  
-        }
+        } 
+
       } else {
         answerScreen.textContent = answer; 
       }
@@ -217,3 +222,4 @@ special.forEach(spec => {
 })
 
 
+console.log('updated')

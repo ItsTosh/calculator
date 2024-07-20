@@ -1,0 +1,112 @@
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 20px 0px;
+  border-radius: 25px;
+  width: 450px;
+  background-color: darkgray;
+}
+
+.display {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  background-color: beige;
+  border-radius: 10px;
+  width: 410px;
+  height: 110px;
+  margin-bottom: 15px;
+  padding: 5px;
+}
+
+.display #displayScreen,
+#answerScreen {
+  padding-right: 15px;
+}
+
+#displayScreen {
+  font-size: 20px;
+}
+
+#answerScreen {
+  font-size: 30px;
+  margin-top: 10px;
+} 
+
+.display {
+  text-align: end;
+}
+
+.number-grid div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  gap: 5px;
+}
+
+.number-grid .specialButtons {
+  display: flex;
+}
+
+.special {
+  flex: 1;
+}
+
+.special.ac {
+  background-color: #faa;
+}
+
+.special.del {
+  background-color: #aaf;
+}
+
+.number-grid button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 30px;
+  width: 100px;
+  font-size: 25px;
+  
+}
+
+button {
+  background-color: #FCFCFC;
+}
+
+button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+  padding: 30.5px;
+  font-size: 28px;
+}
+
+button:disabled {
+  background-color: #fcfcfce7;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: auto;
+} 
+
